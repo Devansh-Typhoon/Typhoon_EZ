@@ -1,4 +1,7 @@
 #include "main.h"
+#include "pros/misc.h"
+#include "pros/misc.hpp"
+#include "pros/motors.h"
 
 
 /////
@@ -11,11 +14,11 @@
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {1, 2, 3}
+  {-1, -2, 3}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{4, 5, 6}
+  ,{4, 5, -6}
 
   // IMU Port
   ,7
@@ -34,6 +37,9 @@ Drive chassis (
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
   ,0.6
 
+
+  
+
   // Uncomment if using tracking wheels
   /*
   // Left Tracking Wheel Ports (negative port will reverse it!)
@@ -49,6 +55,17 @@ Drive chassis (
   // 3 Wire Port Expander Smart Port
   // ,1
 );
+
+pros::Motor left1(1, pros::E_MOTOR_GEARSET_06, true);
+pros::Motor left2(2, pros::E_MOTOR_GEARSET_06, true);
+pros::Motor left3(3, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor right1(4, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor right2(5, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor right3(6, pros::E_MOTOR_GEARSET_06, true);
+pros::Motor intake(7, pros::E_MOTOR_GEARSET_06, true);
+pros::Motor fw(8,pros::E_MOTOR_GEARSET_06,true);
+pros::Controller bob(pros::E_CONTROLLER_MASTER);
+
 
 
 
@@ -169,6 +186,17 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
+      fw.move(127);
+    }
+
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+      intake.move(-127);
+    }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+      intake.move(127);
+    }
+  
 
     pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
