@@ -186,14 +186,14 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
+    if (bob.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
       fw.move(127);
     }
 
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+    if (bob.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
       intake.move(-127);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+    if (bob.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
       intake.move(127);
     }
   
