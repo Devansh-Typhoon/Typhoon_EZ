@@ -187,28 +187,57 @@ void swing_example() {
 // Auto that tests everything
 ///
 void combining_movements() {
-  chassis.set_drive_pid(24, DRIVE_SPEED, true);
+  // chassis.set_drive_pid(24, DRIVE_SPEED, true);
+  // chassis.wait_drive();
+
+  // chassis.set_turn_pid(45, TURN_SPEED);
+  // chassis.wait_drive();
+
+  // chassis.set_swing_pid(ez::RIGHT_SWING, -45, TURN_SPEED);
+  // chassis.wait_drive();
+
+  // chassis.set_turn_pid(0, TURN_SPEED);
+  // chassis.wait_drive();
+
+  // chassis.set_drive_pid(-24, DRIVE_SPEED, true);
+  // chassis.wait_drive();
+  chassis.set_drive_pid(-10,DRIVE_SPEED,false);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(45, TURN_SPEED);
-  chassis.wait_drive();
+  intake.move_relative(500,127);
+  pros::delay(1200);
 
-  chassis.set_swing_pid(ez::RIGHT_SWING, -45, TURN_SPEED);
-  chassis.wait_drive();
-
-  chassis.set_turn_pid(0, TURN_SPEED);
-  chassis.wait_drive();
-
-  chassis.set_drive_pid(-24, DRIVE_SPEED, true);
-  chassis.wait_drive();
-}
-
-void near_side_auton() {
   chassis.set_drive_pid(10,DRIVE_SPEED,false);
   chassis.wait_drive();
 
-
+  chassis.set_turn_pid(20, TURN_SPEED);
+  chassis.wait_drive();
   
+  fw.move(-122);
+  pros::delay(1200);
+
+  intake.move_relative(1000, -127);
+}
+
+// near side auton
+void near_side() {
+  chassis.set_drive_pid(-10,DRIVE_SPEED,false);
+  chassis.wait_drive();
+
+  intake.move_relative(500,127);
+  pros::delay(1200);
+
+  chassis.set_drive_pid(10,DRIVE_SPEED,false);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(20, TURN_SPEED);
+  chassis.wait_drive();
+  
+  fw.move(-122);
+  pros::delay(1200);
+
+  intake.move_relative(1000, -127);
+
 }
 
 ///
