@@ -59,7 +59,15 @@
 // using namespace pros;
 // using namespace pros::literals;
 // using namespace okapi;
-
+extern pros::Motor left1;
+extern pros::Motor left2;
+extern pros::Motor left3;
+extern pros::Motor right1;
+extern pros::Motor right2;
+extern pros::Motor right3;
+extern pros::Motor intake;
+extern pros::Motor fw;
+extern pros::Controller bob;
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
  * that they can be called from user code (i.e. calling autonomous from a

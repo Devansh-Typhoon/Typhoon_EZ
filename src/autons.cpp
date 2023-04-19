@@ -203,7 +203,13 @@ void combining_movements() {
   chassis.wait_drive();
 }
 
+void near_side_auton() {
+  chassis.set_drive_pid(10,DRIVE_SPEED,false);
+  chassis.wait_drive();
 
+
+  
+}
 
 ///
 // Interference example
