@@ -57,12 +57,7 @@ Drive chassis (
   // ,1
 );
 
-pros::Motor left1(1, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor left2(2, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor left3(3, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor right1(4, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor right2(5, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor right3(6, pros::E_MOTOR_GEARSET_06, true);
+
 pros::Motor intake(7, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor fw(8,pros::E_MOTOR_GEARSET_06,true);
 pros::Controller bob(pros::E_CONTROLLER_MASTER);
