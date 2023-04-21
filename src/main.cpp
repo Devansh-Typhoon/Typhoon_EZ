@@ -1,8 +1,9 @@
 #include "main.h"
+#include "autons.hpp"
 #include "pros/misc.h"
 #include "pros/misc.hpp"
 #include "pros/motors.h"
-#include "autons.cpp"
+// #include "autons.cpp"
 
 
 /////
@@ -22,7 +23,7 @@ Drive chassis (
   ,{4, 5, -6}
 
   // IMU Port
-  ,7
+  ,10
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
@@ -61,7 +62,8 @@ Drive chassis (
 pros::Motor intake(7, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor fw(8,pros::E_MOTOR_GEARSET_06,true);
 pros::Controller bob(pros::E_CONTROLLER_MASTER);
-
+pros::ADIDigitalOut expansionR ('A', LOW);
+pros::ADIDigitalOut expansionL ('B', LOW);
 
 
 
@@ -91,11 +93,11 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
     Auton("Example Drive\n\nDrive forward and come back.", drive_example),
-    Auton("Near Side Two Discs\n\nmove bot", near_side),
+    // Auton("Near Side Two Discs\n\nmove bot", near_side),
     Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
     Auton("Drive and Turn\n\nSlow down during drive.", wait_until_change_speed),
     Auton("Swing Example\n\nSwing, drive, swing.", swing_example),
-    Auton("Near Side Auton", combining_movements),
+    Auton("Near Side Auton", near_side),
     Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),
   });
 
@@ -149,7 +151,8 @@ void autonomous() {
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
 
-  ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
+  // ez::as::auton_selector.call_selected_auton();
+  near_side(); // Calls selected auton from autonomous selector.
 }
 
 
@@ -182,17 +185,28 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-    if (bob.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
-      fw.move(-127);
+    if (bob.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1) ) {
+      fw.move(127);
+    } 
+    else if (bob.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2) ) {
+      fw.move(0);
     }
 
     if (bob.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-      intake.move(-127);
-    }
-    if (bob.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
       intake.move(127);
     }
-  
+    else if (bob.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+      intake.move(-127);
+    }
+    else {
+      intake.move(0);
+    }
+    
+	  if (bob.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+	  expansionL.set_value(true);
+	  expansionR.set_value(true);
+	
+	}
 
     pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }

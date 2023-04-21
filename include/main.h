@@ -63,6 +63,8 @@
 extern pros::Motor intake;
 extern pros::Motor fw;
 extern pros::Controller bob;
+extern pros::ADIDigitalOut expansionL;
+extern pros::ADIDigitalOut expansionR;
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
  * that they can be called from user code (i.e. calling autonomous from a

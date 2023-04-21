@@ -26,8 +26,8 @@ const int SWING_SPEED = 90;
 void default_constants() {
   chassis.set_slew_min_power(80, 80);
   chassis.set_slew_distance(7, 7);
-  chassis.set_pid_constants(&chassis.headingPID, 11, 0, 20, 0);
-  chassis.set_pid_constants(&chassis.forward_drivePID, 0.45, 0, 5, 0);
+  chassis.set_pid_constants(&chassis.headingPID, 1, 0, 5, 0);
+  chassis.set_pid_constants(&chassis.forward_drivePID, 2, 0, 5, 0);
   chassis.set_pid_constants(&chassis.backward_drivePID, 0.45, 0, 5, 0);
   chassis.set_pid_constants(&chassis.turnPID, 5, 0.003, 35, 15);
   chassis.set_pid_constants(&chassis.swingPID, 7, 0, 45, 0);
@@ -224,19 +224,19 @@ void near_side() {
   chassis.set_drive_pid(-10,DRIVE_SPEED,false);
   chassis.wait_drive();
 
-  intake.move_relative(500,127);
+  intake.move_relative(500,600);
   pros::delay(1200);
 
   chassis.set_drive_pid(10,DRIVE_SPEED,false);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(20, TURN_SPEED);
+  chassis.set_turn_pid(-20, TURN_SPEED);
   chassis.wait_drive();
   
-  fw.move(-122);
+  fw.move(127);
   pros::delay(1200);
 
-  intake.move_relative(1000, -127);
+  intake.move_relative(5000, -600);
 
 }
 
