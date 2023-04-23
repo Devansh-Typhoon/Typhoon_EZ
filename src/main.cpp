@@ -98,7 +98,7 @@ void initialize() {
     Auton("Drive and Turn\n\nSlow down during drive.", wait_until_change_speed),
     Auton("Swing Example\n\nSwing, drive, swing.", swing_example),
     Auton("Near Side Auton", near_side),
-    Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),
+    Auton("Off Roller", off_roller),
   });
 
   // Initialize chassis and auton selector
@@ -152,7 +152,7 @@ void autonomous() {
   chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
 
   // ez::as::auton_selector.call_selected_auton();
-  near_side(); // Calls selected auton from autonomous selector.
+  off_roller(); // Calls selected auton from autonomous selector.
 }
 
 
@@ -186,7 +186,7 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
     if (bob.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1) ) {
-      fw.move(127);
+      fw.move_voltage(12000);
     } 
     else if (bob.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2) ) {
       fw.move(0);
@@ -196,7 +196,7 @@ void opcontrol() {
       intake.move(127);
     }
     else if (bob.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-      intake.move(-127);
+      intake.move_voltage(-12000);
     }
     else {
       intake.move(0);

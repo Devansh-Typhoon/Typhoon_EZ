@@ -28,8 +28,8 @@ void default_constants() {
   chassis.set_slew_distance(7, 7);
   chassis.set_pid_constants(&chassis.headingPID, 1, 0, 5, 0);
   chassis.set_pid_constants(&chassis.forward_drivePID, 2, 0, 5, 0);
-  chassis.set_pid_constants(&chassis.backward_drivePID, 0.45, 0, 5, 0);
-  chassis.set_pid_constants(&chassis.turnPID, 5, 0.003, 35, 15);
+  chassis.set_pid_constants(&chassis.backward_drivePID, 2, 0, 5, 0);
+  chassis.set_pid_constants(&chassis.turnPID, 4, 0.003, 7, 15);
   chassis.set_pid_constants(&chassis.swingPID, 7, 0, 45, 0);
 }
 
@@ -71,7 +71,7 @@ void modified_exit_condition() {
 // Drive Example
 ///
 void drive_example() {
-  // The first parameter is target inches
+  // The first parameter is target cm
   // The second parameter is max speed the robot will drive at
   // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
   // for slew, only enable it when the drive distance is greater then the slew distance + a few inches
@@ -221,25 +221,52 @@ void combining_movements() {
 
 // near side auton
 void near_side() {
-  chassis.set_drive_pid(-10,DRIVE_SPEED,false);
+  chassis.set_drive_pid(-10,DRIVE_SPEED,true);
   chassis.wait_drive();
 
-  intake.move_relative(500,600);
+  intake.move_relative(-500,600);
   pros::delay(1200);
 
-  chassis.set_drive_pid(10,DRIVE_SPEED,false);
+  chassis.set_drive_pid(30,DRIVE_SPEED,true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(-20, TURN_SPEED);
-  chassis.wait_drive();
+
   
-  fw.move(127);
+  fw.move_voltage(12000);
+  pros::delay(2000);
+
+  intake.move_relative(360, -600);
+  pros::delay(2000);
+  intake.move_relative(1000, -600);
+}
+void off_roller() {
+
+  chassis.set_drive_pid(-45, 70);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(90, TURN_SPEED);
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(-22, 50);
+  chassis.wait_drive();
+
+  intake.move_relative(-400, 600);
+  pros::delay(500);
+
+
+
+  chassis.set_drive_pid(60,50);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(100, TURN_SPEED);
+
+  fw.move_voltage(12000);
   pros::delay(1200);
 
-  intake.move_relative(5000, -600);
-
+  intake.move_relative(360, -600);
+  pros::delay(2000);
+  intake.move_relative(1000, -600);
 }
-
 ///
 // Interference example
 ///
